@@ -1,0 +1,88 @@
+<
+!DOCTYPE html>
+<html>
+<style>
+	p{
+		font-size: 20px;
+		font-family: times new roman; 
+		background-color:#D3D3D3;
+		color: black; 
+		padding:20px;
+	}
+	header{
+		font-size: 40px; 
+		font-family: arial;
+		background-color:#696969; 
+		color: white; 
+		text-align: center; 
+		padding:30px;
+	}
+	body{
+		background-color: #D3D3D3;
+	}
+</style>
+<head>
+	<title>Fargar</title>
+</head>
+<body>
+<header>Fargar</header>
+<p>Klikk plassholderteksten og begynn å skrive for å komme i gang.
+Bruk følgebrevet til å vise hvordan talentene og erfaringene dine vil løse et problem eller føre til resultater for den fremtidige arbeidsgiveren. Hvis du for eksempel skriver at du er samarbeidsvillig, kan du gi et eksempel på hvordan du benyttet samarbeidsevnene dine ved forrige utplassering, og så kan du vise hvordan den erfaringen kan være til nytte for arbeidsgiveren.Klikk plassholderteksten og begynn å skrive for å komme i gang.
+Bruk følgebrevet til å vise hvordan talentene og erfaringene dine vil løse et problem eller føre til resultater for den fremtidige arbeidsgiveren. Hvis du for eksempel skriver at du er samarbeidsvillig, kan du gi et eksempel på hvordan du benyttet samarbeidsevnene dine ved forrige utplassering, og så kan du vise hvordan den erfaringen kan være til nytte for arbeidsgiveren.Klikk plassholderteksten og begynn å skrive for å komme i gang.Klikk plassholderteksten og begynn å skrive for å komme i gang.
+Bruk følgebrevet til å vise hvordan talentene og erfaringene dine vil løse et problem eller føre til resultater for den fremtidige arbeidsgiveren. Hvis du for eksempel skriver at du er samarbeidsvillig, kan du gi et eksempel på hvordan du benyttet samarbeidsevnene dine ved forrige utplassering, og så kan du vise hvordan den erfaringen kan være til nytte for arbeidsgiveren.
+</p>
+<img src="hund.jpeg">
+<p>
+	Det som teller er personlig tilpassing. Skriv et følgebrev som på en unik måte presenterer ditt sanne jeg og hva akkurat du kan gjøre for firmaet.Det som teller er personlig tilpassing. Skriv et følgebrev som på en unik måte presenterer ditt sanne jeg og hva akkurat du kan gjøre for firmaet.
+</p>
+<form id="skjema">
+	<input type="text" id="inpSendar" required placeholder="Kven er du?">
+	<input type="text" id="inpMeining" required placeholder="Kva seier du?">
+	<button type="submit"
+	class="button">OK</button> 
+</form>
+<article id="txtMeldingar"></article>
+	<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCUUPHlWOuPQUMYWEKN2WNHYgm81-NbgCk",
+    authDomain: "startemedfirebace.firebaseapp.com",
+    databaseURL: "https://startemedfirebace.firebaseio.com",
+    projectId: "startemedfirebace",
+    storageBucket: "startemedfirebace.appspot.com",
+    messagingSenderId: "182117215221"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+	let database = firebase.database();
+	let meldingar = database.ref("meldingar"); 
+	let skjema = document.getElementById("skjema");
+	let inpSendar = document.getElementById("inpSendar");
+	let inpMelding = document.getElementById("inpMeining"); 
+	let txtMeldingar = document.getElementById("txtMeldingar"); 
+
+	function visMelding(snapshot) {
+		let melding = snapshot.val(); 
+		txtMeldingar.innerHTML += `<p>${melding.sendar} seier ${melding.tekst}</p>`;
+		txtMeldingar.innerHTML = txtMeldingar.innerHTML + meldingTekst;
+		let meldingTekst = `<p>
+			<b>${melding.sendar}: </b>
+			<i>${melding.tekst}</i>
+		</p>`;
+	}
+	function regNyMelding(evt) {
+		evt.preventDefault(); 
+		var nyMelding = {
+		sendar: inpSendar.value,
+		tekst: inpMelding.value 
+	}
+	meldingar.push(nyMelding);
+	inpMeining.value = " ";
+}
+meldingar.on("child_added", visMelding);
+skjema.onsubmit = regNyMelding;
+</script>
+</body>
+</html>
